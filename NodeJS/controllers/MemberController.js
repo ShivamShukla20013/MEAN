@@ -14,6 +14,19 @@ router.get('/',(req,res)=> {
     }); 
 });
 
+router.get('/:id',(req,res)=> {
+    if (ObjectId.isValid(req.params.id)) {
+        Member.findById(req.params.id,(err,docs)=> {
+            if(err) throw err;
+            res.send(docs);
+        })
+    }
+
+    else {
+        return res.status(200).send('No Record found with id'+req.params.id);
+    }
+});
+
 router.post('/',(req,res)=> {
     var MemberRecord = new Member({
         FirstName: req.body.FirstName,
@@ -27,8 +40,46 @@ router.post('/',(req,res)=> {
 
     MemberRecord.save((err,docs)=> {
         if (err) throw err;
+        res.send(docs);
         console.log('Data Inserted.');
     });
 });
+
+router.put('/:id',(req,res)=> {
+    if (ObjectId.isValid(req.params.id)) {
+        var MemberRecord = {
+            FirstName: req.body.FirstName,
+            LastName: req.body.LastName,
+            ContactNo: req.body.ContactNo,
+            EmailId: req.body.EmailId,
+            Password: req.body.Password,
+            Gender: req.body.Gender,
+            Status: req.body.Status
+        };
+
+        Member.findByIdAndUpdate(req.params.id,{$set:MemberRecord},{new:true},(err,docs)=> {
+            if (err) {
+                throw err;
+            }
+            res.send(docs);
+        });
+    } else {
+        return res.status(200).send('No Record found with Id:'+req.params.id);
+    }
+});
+
+router.delete('/:id',(req,res)=> {
+    if (ObjectId.isValid(req.params.id)) {
+        Member.findByIdAndRemove(req.params.id,(err,docs)=> {
+            if (err) {
+                throw err;
+            }
+            res.send(docs);
+        })
+    }
+    else{
+        return res.status(200).send('No Record Found with Id:'+req.params.id);
+    }
+})
 
 module.exports=router;
