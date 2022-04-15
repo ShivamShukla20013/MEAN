@@ -41,11 +41,11 @@
 
                                 <div class="gender">
                                     <label>
-                                        <input class="with-gap" value="Male" name="Gender" type="radio" #Gender="ngModel" [(ngModel)]="memberService.selectedMember.Gender" />
+                                        <input class="with-gap" value="Male" name="Gender" type="radio" #Gender="ngModel" [(ngModel)]="memberService.selectedMember.Gender" required />
                                         <span style="vertical-align:middle;margin-right: 20px;">Male</span>
                                       </label>
                                     <label>
-                                        <input class="with-gap" value="Female" name="Gender" type="radio" #Gender="ngModel" [(ngModel)]="memberService.selectedMember.Gender" />
+                                        <input class="with-gap" value="Female" name="Gender" type="radio" #Gender="ngModel" [(ngModel)]="memberService.selectedMember.Gender" required />
                                         <span style="vertical-align:middle;">Female</span>
                                       </label>
                                 </div>
